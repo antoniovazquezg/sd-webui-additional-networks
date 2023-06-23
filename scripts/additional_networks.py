@@ -61,7 +61,8 @@ class Script(scripts.Script):
 
                 for i in range(MAX_MODEL_COUNT):
                     with FormRow(variant="compact"):
-                        module = gr.Dropdown(["LoRA"], label=f"Network module {i+1}", value="LoRA")
+                        module = gr.Dropdown(["LoRA"], label=f"Network module {i+1}", value="LoRA", visible=false)
+                        module = "LoRA"
                         model = gr.Dropdown(list(lora_models.keys()), label=f"Model {i+1}", value="None")
                         with gr.Row(visible=False):
                             model_path = gr.Textbox(value="None", interactive=False, visible=False)
@@ -92,12 +93,12 @@ class Script(scripts.Script):
                         # perhaps there is no user to train Text Encoder only, Weight A is U-Net
                         # The name of label will be changed in future (Weight A and B), but UNet and TEnc for now for easy understanding
                         with gr.Column() as col:
-                            weight = gr.Slider(label=f"Weight {i+1}", value=1.0, minimum=-1.0, maximum=2.0, step=0.05, visible=True)
+                            weight = gr.Slider(label=f"Weight {i+1}", value=0.4, minimum=-1.0, maximum=2.0, step=0.05, visible=True)
                             weight_unet = gr.Slider(
-                                label=f"UNet Weight {i+1}", value=1.0, minimum=-1.0, maximum=2.0, step=0.05, visible=False
+                                label=f"UNet Weight {i+1}", value=0.4, minimum=-1.0, maximum=2.0, step=0.05, visible=False
                             )
                             weight_tenc = gr.Slider(
-                                label=f"TEnc Weight {i+1}", value=1.0, minimum=-1.0, maximum=2.0, step=0.05, visible=False
+                                label=f"TEnc Weight {i+1}", value=0.4, minimum=-1.0, maximum=2.0, step=0.05, visible=False
                             )
 
                         weight.change(lambda w: (w, w), inputs=[weight], outputs=[weight_unet, weight_tenc])
